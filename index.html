@@ -98,7 +98,7 @@ body {background-color: #FFFFFF;}
         </div>
     </div>
     <script>
-        const APIURL = "https://testnode2.wavesnodes.com/addresses/data/3N6oWLyQY2gM7QUkUvBme1REnA6d1V7y3AT";
+        const APIURL = "https://tnnode.turtlenetwork.eu/addresses/data/3JyPRvsj9CCXb2wX5X7XbcGFMqJkm6KMKod";
 
         var loanData = '';
         var loading = document.getElementById("loading");
@@ -114,7 +114,7 @@ body {background-color: #FFFFFF;}
             loanData = await responseObject.json();
          
 
-            var panel0ResponseObject = await fetch("https://testnode2.wavesnodes.com/addresses/data/3N6oWLyQY2gM7QUkUvBme1REnA6d1V7y3AT/Total_Proposals");
+            var panel0ResponseObject = await fetch("https://tnnode.turtlenetwork.eu/addresses/data/3JyPRvsj9CCXb2wX5X7XbcGFMqJkm6KMKod/Total_Proposals");
             panel1Data = await panel0ResponseObject.json();
             document.getElementById("panel0").innerHTML = 'Total Proposal Posted<br>'+panel1Data.value;
                                                                       
