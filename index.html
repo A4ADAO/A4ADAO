@@ -276,6 +276,9 @@ body {background-color: #FFFFFF;}
                         if(Indicator == 0 && searchResult[index].Quorum_Status=="Pass"){
                             output += '<span class="bg-success px-2 py-1 w-100 small rounded text-white">Winner-Yes</span>';
                         }                        
+                        if(searchResult[index].Total_Yes ==0 && searchResult[index].Total_No ==0){
+                            output += '<span class="bg-info px-2 py-1 w-100 small rounded text-white">Nil Vote</span>';
+                        }                                                
                         else{
                             output += '<span class="bg-danger px-2 py-1 w-100 small rounded text-white">Winner-No</span>';
                         }
