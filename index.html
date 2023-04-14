@@ -163,14 +163,23 @@ body {background-color: #FFFFFF;}
                     if(item.key.includes('Total_Votes_')){
                         searchResult[thisIndex].Total_Votes = item.value;
                     }
+                    if(item.key.includes('Minimum_Quorum_')){
+                        searchResult[thisIndex].Minimum_Quorum = item.value;
+                    }                    
                     if(item.key.includes('Total_Yes_')){
                         searchResult[thisIndex].Total_Yes = item.value;
                     }
                     if(item.key.includes('Total_No_')){
                         searchResult[thisIndex].Total_No = item.value;
                     }
+                    if(item.key.includes('Voting_Start_TimeStamp_')){
+                        searchResult[thisIndex].Voting_Start_Timestamp = item.value;
+                    }                                        
                     if(item.key.includes('Voting_End_TimeStamp_')){
                         searchResult[thisIndex].Voting_End_Timestamp = item.value;
+                    }
+                    if(item.key.includes('Quorum_Status_')){
+                        searchResult[thisIndex].Quorum_Status = item.value;
                     }                    
                 }
             });
@@ -201,9 +210,12 @@ body {background-color: #FFFFFF;}
                 output += '<th># Title</th>';                
                 output += '<th># PROPOSAR ADDRESS</th>';                
                 output += '<th>TOTAL VOTES</th>';
+                output += '<th>Minimum Quorum</th>';                
                 output += '<th>"YES" Vote Amount</th>';
                 output += '<th>"NO" Vote Amount</th>';
+                output += '<th>Voting Start Period</th>';                
                 output += '<th>Voting End Period</th>';
+                output += '<th>Quorum Status</th>';
                 output += '<th>Proposal Status</th>';
                 output += '</tr>';
                 output += '</thead>';
@@ -226,7 +238,11 @@ body {background-color: #FFFFFF;}
                     }else{
                         output += '<td>'+(searchResult[index].Total_Votes/100000000).toFixed(8)+' A4A</td>';
                     }
-
+                    if(searchResult[index].Minimum_Quorum === undefined || String(searchResult[index].Minimum_Quorum).length < 1){
+                        output += '<td>N&#47;A</td>';
+                    }else{
+                        output += '<td>'+(searchResult[index].Minimum_Quorum/100000000).toFixed(8)+' A4A</td>';
+                    }                    
                     if(searchResult[index].Total_Yes === undefined || String(searchResult[index].Total_Yes).length < 1){
                         output += '<td>N&#47;A</td>';
                     }else{
@@ -237,17 +253,31 @@ body {background-color: #FFFFFF;}
                     }else{
                         output += '<td>'+(searchResult[index].Total_No/100000000).toFixed(8)+' A4A</td>';
                     }
+                    if(searchResult[index].Voting_Start_Timestamp === undefined || String(searchResult[index].Voting_Start_Timestamp).length < 1){
+                        output += '<td>N&#47;A</td>';
+                    }else{
+                        output += '<td>'+ new Date(searchResult[index].Voting_Start_Timestamp).toLocaleString("en-US")+'</td>';
+                    }                                        
                     if(searchResult[index].Voting_End_Timestamp === undefined || String(searchResult[index].Voting_End_Timestamp).length < 1){
                         output += '<td>N&#47;A</td>';
                     }else{
                         output += '<td>'+ new Date(searchResult[index].Voting_End_Timestamp).toLocaleString("en-US")+'</td>';
                     }                    
+                    if(searchResult[index].Quorum_Status === undefined || String(searchResult[index].Quorum_Status).length < 1){
+                        output += '<td>N&#47;A</td>';
+                    }else{
+                        output += '<td>'+ searchResult[index].Quorum_Status+'</td>';
+                    }                                        
                     var Indicator = parseInt(searchResult[index].Total_Yes - searchResult[index].Total_No);
                     output += '<td>';
-                        if(Indicator > 0){
-                            output += '<span class="bg-success px-2 py-1 w-100 small rounded text-white">Passed</span>';
-                        }else{
-                            output += '<span class="bg-danger px-2 py-1 w-100 small rounded text-white">Rejected</span>';
+                        if(Indicator > 0 && searchResult[index].Quorum_Status=="Pass"){
+                            output += '<span class="bg-success px-2 py-1 w-100 small rounded text-white">Winner-Yes</span>';
+                        }
+                        if(Indicator == 0 && searchResult[index].Quorum_Status=="Pass"){
+                            output += '<span class="bg-success px-2 py-1 w-100 small rounded text-white">Winner-Yes</span>';
+                        }                        
+                        else{
+                            output += '<span class="bg-danger px-2 py-1 w-100 small rounded text-white">Winner-No</span>';
                         }
                     output += '</td>';
                     output += '</tr>';
@@ -287,10 +317,6 @@ body {background-color: #FFFFFF;}
 			downloadLink.click();
 		}
         
-
-        
-        
-
     </script>
 </body>
 </html>
